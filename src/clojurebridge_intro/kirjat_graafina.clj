@@ -2,57 +2,57 @@
   (:require [clojurebridge-intro.tiedonkasittely :as t]
             [quil.core :as q]))
 
-; Taulukko kirjan genrestä väriin:
+
 ;                Genre:        Pun  Vih  Sin
-(def genre-vari {:fantasia    [32   178  62]
+(def genre-color {:fantasia   [32   178  62]
                  :mysteeri    [182  42   42]
                  :klassikko   [142  142  182]
                  :romantiikka [255  155  155]
                  :sci-fi      [230  20   192]})
 
-; Funktio joka ottaa kirjan ja palauttaa värin:
+; Function that takes a book and returns a color
 
-(defn kirjan-vari [kirja]
-  (let [genre (get kirja :genre)
-        varit (get genre-vari genre)
-        pun (nth varit 0)
-        vih (nth varit 1)
-        sin (nth varit 2)]
-    (q/color pun vih sin)))
+(defn book-color [book]
+  (let [genre (get book :genre)
+        colors (get genre-color genre)
+        red (nth colors 0)
+        green (nth colors 1)
+        blue (nth colors 2)]
+    (q/color red green blue)))
 
 ; Funktio joka ottaa kirjan ja palauttaa x-koordinaatin
 ; kirjan sivumäärän perusteella:
 
-(defn kirjan-x [kirja]
-  (let [sivuja (get kirja :sivuja)]
-    (q/map-range sivuja
-                 0 670    ; min ja max sivumäärä
-                 0 600))) ; min ja max x-koordinaatti
+(defn book-x-coordinate [book]
+  (let [pages (get book :sivuja)]
+    (q/map-range pages
+                 0 670    ; min and max page count
+                 0 600))) ; min and max x-coordinate
 
 ; Funktio joka ottaa kirjan ja palauttaa y-koordinaatin
 ; kirjan hinnan perusteella:
 
-(defn kirjan-y [kirja]
-  (let [hinta (get kirja :hinta)]
-    (q/map-range hinta
+(defn book-y-coordinate [book]
+  (let [price (get book :hinta)]
+    (q/map-range price
                  0 30     ; min ja max hinta
                  0 600))) ; min ja max y-koordinaatti
 
   ; Piirtää yhden kirjan:
 
-(defn piirra-kirja [kirja]
-  (let [vari (kirjan-vari kirja)
-        x (kirjan-x kirja)
-        y (kirjan-y kirja)
+(defn draw-book [book]
+  (let [color (book-color book)
+        x (book-x-coordinate book)
+        y (book-y-coordinate book)
         r 50]
-    (q/fill vari)
+    (q/fill color)
     (q/ellipse x y r r)
     (q/fill 0)
-    (q/text (get kirja :nimi) x y)))
+    (q/text (get book :nimi) x y)))
 
 ; Tyhjentää ruudun:
 
-(defn tyhjennys []
+(defn clear []
   (q/background 190 190 190)      ;; Harmaa tausta
   (q/fill 0 0 0)                  ;; Täyttö väri
   (q/stroke 255 255 255)          ;; Viivan väri
@@ -62,14 +62,14 @@
 
 ; Piirtää ruudun:
 
-(defn piirto []
-  (tyhjennys)
-  (doseq [kirja t/kirjat]
-    (piirra-kirja kirja)))
+(defn draw []
+  (clear)
+  (doseq [book t/books]
+    (draw-book book)))
 
 ; Alustus:
 
-(defn alustus []
+(defn init []
   ; Kirjaisimen asetus:
   (q/text-font (q/create-font "SansSerif" 36 true))
   (q/text-size 15)
@@ -78,15 +78,15 @@
 
 ; Avaa uuden piirto-ikkunan:
 
-(defn avaa-uusi-ikkuna []
+(defn open-new-window []
   (q/defsketch kirjat-graafina
-    :title "Kirjat palloina"     ;; Otsikko
-    :setup alustus               ;; Alustus funktio
-    :draw piirto                 ;; Piirto funktio
-    :features [:keep-on-top]     ;; Taikuutta
-    :size [685 600]))            ;; Koko
+               :title "Kirjat palloina"     ;; Otsikko
+               :setup init               ;; Alustus funktio
+               :draw draw                 ;; Piirto funktio
+               :features [:keep-on-top]     ;; Taikuutta
+               :size [685 600]))            ;; Koko
 
 (comment
   ; Maalaa tämä ja paina (win) ctrl+enter (mac) cmd+enter
-  (avaa-uusi-ikkuna)
+  (open-new-window)
   )

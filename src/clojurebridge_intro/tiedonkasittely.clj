@@ -4,11 +4,11 @@
 ; Tässä on esitelty muutamia kirjoja
 ;   (lähteet: goodreads.com ja piki.verkkokirjasto.fi)
 
-(def kirjat [{:nimi "Harry Potter ja Viisasten kivi"
+(def books [{:nimi        "Harry Potter ja Viisasten kivi"
               :kirjailija "J.K. Rowling"
-              :sivuja 310
-              :genre :fantasia
-              :hinta 6.50}
+              :sivuja     310
+              :genre      :fantasia
+              :hinta      6.50}
              {:nimi "Harry Potter ja Salaisuuksien kammio"
               :kirjailija "J.K. Rowling"
               :sivuja 341
