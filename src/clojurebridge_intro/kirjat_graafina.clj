@@ -5,10 +5,10 @@
 
 ;                Genre:        Pun  Vih  Sin
 (def genre-color {:fantasia   [32   178  62]
-                 :mysteeri    [182  42   42]
-                 :klassikko   [142  142  182]
-                 :romantiikka [255  155  155]
-                 :sci-fi      [230  20   192]})
+                  :mysteeri    [182  42   42]
+                  :klassikko   [142  142  182]
+                  :romantiikka [255  155  155]
+                  :sci-fi      [230  20   192]})
 
 ; Function that takes a book and returns a color
 
@@ -88,5 +88,4 @@
 
 (comment
   ; Maalaa tämä ja paina (win) ctrl+enter (mac) cmd+enter
-  (open-new-window)
-  )
+ (open-new-window))  
